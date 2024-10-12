@@ -174,7 +174,7 @@ class ScreenshotAnalyzer(QMainWindow, Ui_MainWindow):
 
     def update_conversation(self, text, role):
         markdown_text = markdown.markdown(text) if role == AI_ROLE else text
-        self.conversation.append(f"<b>{role.upper()}</b> : <font color='{'blue' if role == AI_ROLE else 'green'}'>{markdown_text}</font>")
+        self.conversation.append(f"<b>{role.upper()}</b> : <font color='#808080'>{markdown_text}</font>")
         self.conversation.ensureCursorVisible()
 
     def image_to_base64(self):
