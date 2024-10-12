@@ -28,7 +28,8 @@ class ScreenshotAnalyzer(QMainWindow, Ui_MainWindow):
             self.ollama_checkbox.setChecked(True)
         else :
             self.ollama_checkbox.setChecked(False) 
-        
+        self.ollama_system_message = 'You are an AI assistant analyzing images. Provide detailed and accurate descriptions of the image contents.'
+
     def load_config(self):
             dotenv.load_dotenv(override=True)
             self.LLM_API_MODEL = os.getenv("LLM_API_KEY")
@@ -111,7 +112,8 @@ class ScreenshotAnalyzer(QMainWindow, Ui_MainWindow):
         if len(self.memory) == 0:
             if self.ollama_checkbox.isChecked():
                 try:
-                    self.memory.append({'role':USER_ROLE, 'content':text , 'images': [self.image_path]})
+                    self.memory.append({'role': 'system', 'content': self.ollama_system_message})
+                    self.memory.append({'role': USER_ROLE, 'content': text, 'images': [self.image_path]})
                 except Exception as e:
                     self.show_error_message("No image found")
                     self.loading_label.setText("")
@@ -171,7 +173,6 @@ class ScreenshotAnalyzer(QMainWindow, Ui_MainWindow):
         error_message.setWindowModality(Qt.ApplicationModal)
         error_message.setText("Error occurred. Please try again. Error: " + red_color)
         error_message.exec_()
-
     def update_conversation(self, text, role):
         markdown_text = markdown.markdown(text) if role == AI_ROLE else text
         self.conversation.append(f"<b>{role.upper()}</b> : <font color='#808080'>{markdown_text}</font>")
