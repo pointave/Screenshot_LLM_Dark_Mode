@@ -33,7 +33,7 @@ class Ui_MainWindow(object):
 
         # Add grey text at the bottom
         self.credit_label = QtWidgets.QLabel(self.centralwidget)
-        self.credit_label.setStyleSheet("color: grey; font-size: 10px;")
+        self.credit_label.setStyleSheet("color: #a0a0a0; font-size: 10px;")
         self.credit_label.setText("Created by <a href='https://github.com/ThanabordeeN/Screenshot_LLM'>ThanabordeeN</a>")
         self.credit_label.setAlignment(QtCore.Qt.AlignCenter)
         self.credit_label.setOpenExternalLinks(True)
@@ -50,8 +50,8 @@ class Ui_MainWindow(object):
         y = 0
         self.MainWindow.move(x, y)
 
-        # Set window icon
-        icon = QtGui.QIcon("icon.ico")
+        # Set window icon (use a light-colored icon for dark theme)
+        icon = QtGui.QIcon("icon_light.ico")  # Make sure you have a light version of your icon
         self.MainWindow.setWindowIcon(icon)
 
     def setup_main_tab(self, font):
@@ -70,7 +70,7 @@ class Ui_MainWindow(object):
         self.tab1_layout.addWidget(self.entry)
 
         self.loading_label = self.create_label()
-        self.loading_label.setStyleSheet("color: #007BFF;")
+        self.loading_label.setStyleSheet("color: #4a9eff;")
         self.loading_label.setFont(font)
         self.tab1_layout.addWidget(self.loading_label)
 
@@ -148,51 +148,74 @@ class Ui_MainWindow(object):
 
     def get_stylesheet(self):
         return """
-            QMainWindow {
-                background-color: #f0f0f0;
+            QMainWindow, QTabWidget, QWidget {
+                background-color: #2b2b2b;
+                color: #e0e0e0;
             }
-            QLabel, QTextEdit, QLineEdit, QPushButton {
+            QTabWidget::pane {
+                border: 1px solid #555555;
+            }
+            QTabBar::tab {
+                background-color: #3a3a3a;
+                color: #e0e0e0;
+                padding: 8px 12px;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            QTabBar::tab:selected {
+                background-color: #4a4a4a;
+            }
+            QLabel, QTextEdit, QLineEdit, QPushButton, QCheckBox {
                 border: none;
-                border-radius: 10px;
-                padding: 10px;
-                background-color: #ffffff;
+                border-radius: 6px;
+                padding: 8px;
+                background-color: #3a3a3a;
+                color: #e0e0e0;
             }
-            QScrollBar{
-                background : #e0e0e0;
-                border-radius: 10px;
-                }
-                QScrollBar::handle
-                {
-                background : #0056b3;
-                border-radius: 10px;
-
-                }
-                QScrollBar::handle::pressed
-                {
-                background : #004080;
-                border-radius: 10px;
-                }
+            QScrollBar {
+                background: #3a3a3a;
+                border-radius: 6px;
+            }
+            QScrollBar::handle {
+                background: #5a5a5a;
+                border-radius: 6px;
+            }
+            QScrollBar::handle::pressed {
+                background: #6a6a6a;
+            }
             QLabel {
-                background-color: #e0e0e0;
+                background-color: #333333;
             }
-            QTextEdit {
-                background-color: #f5f5f5;
-            }
-            QLineEdit {
-                background-color: #f5f5f5;
+            QTextEdit, QLineEdit {
+                background-color: #333333;
+                border: 1px solid #555555;
             }
             QPushButton {
-                background-color: #007BFF;
-                color: white;
+                background-color: #0056b3;
+                color: #ffffff;
                 font-weight: bold;
             }
             QPushButton:hover {
-                background-color: #0056b3;
+                background-color: #0066cc;
             }
             QPushButton:pressed {
                 background-color: #004080;
             }
-            
+            QCheckBox {
+                spacing: 5px;
+            }
+            QCheckBox::indicator {
+                width: 18px;
+                height: 18px;
+                border-radius: 3px;
+                border: 1px solid #555555;
+            }
+            QCheckBox::indicator:unchecked {
+                background-color: #2b2b2b;
+            }
+            QCheckBox::indicator:checked {
+                background-color: #0056b3;
+            }
         """
 
     def create_label(self):
